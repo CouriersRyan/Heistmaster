@@ -19,9 +19,8 @@ public class UnitView : MonoBehaviour
         _controller = new UnitController(model);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GoToPoint(Vector3 pos)
     {
-        Debug.Log(_agent.SetDestination(target.position));
+        _agent.SetDestination(pos);
     }
 }
