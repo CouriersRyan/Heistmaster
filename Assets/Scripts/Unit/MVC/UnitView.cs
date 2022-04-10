@@ -11,6 +11,7 @@ public class UnitView : MonoBehaviour
     [SerializeField] private UnitModel model;
     private UnitController _controller;
     
+    protected int _layerBoard = (1 << 3) + (1 << 6) + (1 << 7);
     
     private Queue<UnitAction> _queueActions = new Queue<UnitAction>();
     private UnitAction _currentAction;

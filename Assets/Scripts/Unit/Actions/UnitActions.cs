@@ -25,7 +25,6 @@ public class UnitActionMove : UnitAction
     {
         if (controller.CheckReachedDestination())
         {
-            Debug.Log("reached");
             view.NextAction();
         }
     }

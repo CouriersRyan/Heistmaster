@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _mousePos;
     private float _shift;
     
-    private int _layerBoard = 1 << 3; // A layer mask that only interacts with gameobjects that are part of the board.
+    private int _layerBoard = (1 << 3) + (1 << 6) + (1 << 7); // A layer mask that only interacts with gameobjects that are part of the board.
     // i.e. not decorations, UI, menus, etc.
 
     
