@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Gameboard
+  - Enemy
+  - Interactable
   layers:
   - Default
   - TransparentFX
