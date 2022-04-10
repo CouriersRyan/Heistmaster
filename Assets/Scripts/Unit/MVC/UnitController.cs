@@ -18,7 +18,7 @@ public class UnitController
     {
         _model.agent.SetDestination(pos);
     }
-    
+
     // Check whether or not the unit is still moving.
     public bool CheckReachedDestination()
     {
@@ -26,7 +26,6 @@ public class UnitController
         // Code by Tryz
         if (!_model.agent.pathPending)
         {
-            Debug.Log(_model.agent.remainingDistance);
             if (_model.agent.remainingDistance <= _model.agent.stoppingDistance)
             {
                 if (!_model.agent.hasPath || _model.agent.velocity.sqrMagnitude == 0f)

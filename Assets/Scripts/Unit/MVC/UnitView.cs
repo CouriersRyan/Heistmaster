@@ -17,26 +17,34 @@ public class UnitView : MonoBehaviour
     [SerializeField] private string currentActionName;
     
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         model.agent = GetComponent<NavMeshAgent>();
         _controller = new UnitController(model);
     }
     
     // While there is an action queued, run the action.
-    private void Update()
+    protected void Update()
     {
         if(_currentAction != null)_currentAction.Action(_controller, this);
     }
 
     // Stop the previous action on the queue and run the new action in the front of the queue.
-    public UnitAction NextAction()
+    public virtual UnitAction NextAction()
     {
         // TODO: Object pooling
         if(_currentAction != null) _currentAction.EndAction(_controller, this);
-        _currentAction = _queueActions.Dequeue();
-        _currentAction.StartAction(_controller, this);
-        currentActionName = _currentAction.actionName;
+        if (_queueActions.Count > 0)
+        {
+            _currentAction = _queueActions.Dequeue();
+            _currentAction.StartAction(_controller, this);
+            currentActionName = _currentAction.actionName;
+        }
+        else
+        {
+            _currentAction = null;
+        }
+        
         return _currentAction;
     }
     
