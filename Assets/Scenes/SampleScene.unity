@@ -272,9 +272,9 @@ GameObject:
   - component: {fileID: 620205575}
   - component: {fileID: 620205574}
   - component: {fileID: 620205573}
-  m_Layer: 0
-  m_Name: Plane
-  m_TagString: Untagged
+  m_Layer: 3
+  m_Name: Gameboard
+  m_TagString: Gameboard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -1068,7 +1068,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5735afa0ccbd3dc408fbf0a19e478a4e, type: 2}
+  - {fileID: 2100000, guid: 8d81f9b16a9135446b5451caa37570ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
