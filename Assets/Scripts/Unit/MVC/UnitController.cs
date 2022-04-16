@@ -38,4 +38,10 @@ public class UnitController
 
         return false;
     }
+
+    // Sets the maximum stopping distance for the navmesh agent.
+    public void SetStoppingDistance(float stopDist = UnitModel.StopDist)
+    {
+        _model.agent.stoppingDistance = stopDist;
+    }
 }

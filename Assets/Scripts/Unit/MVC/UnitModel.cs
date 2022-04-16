@@ -10,4 +10,6 @@ public class UnitModel
     public NavMeshAgent agent;
     public bool knockedOut;
     public const float StopDist = 0.2f;
+
+    public List<GameObject> _items = new List<GameObject>();
 }

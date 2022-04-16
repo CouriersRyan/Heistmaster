@@ -103,21 +103,29 @@ public class UnitView : MonoBehaviour
 
         return newAction;
     }
-
-    public void SetUnitSpeed(float speed)
-    {
-        model.agent.speed = speed;
-    }
-
+    
+    // Knocks out or unknocks out the unit, preventing them from taking actions.
     public void SetKnockout(bool knockedOut)
     {
         model.knockedOut = knockedOut;
         OverwriteActions(GetAction(UnitActions.Idle, null));
-        
+        foreach (var item in model._items)
+        {
+            item.SetActive(true);
+            item.transform.position = transform.position;
+        }
     }
-
-    public void SetStoppingDistance(float stopDist = UnitModel.StopDist)
+    
+    // Sets the speed of the navmesh agent.
+    public void SetUnitSpeed(float speed)
     {
-        model.agent.stoppingDistance = stopDist;
+        model.agent.speed = speed;
+    }
+    
+    //Adds item to inventory in model
+    public void AddItem(GameObject item)
+    {
+        item.transform.position = Vector3.zero;
+        model._items.Add(item);
     }
 }

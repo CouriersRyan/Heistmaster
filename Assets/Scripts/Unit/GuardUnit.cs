@@ -81,7 +81,6 @@ public class GuardUnit : UnitView
     private Transform SeePlayer()
     {
         var results = Physics.SphereCastAll(transform.position, castRadius, transform.forward, viewDistance, _layerBoard);
-        Debug.Log(results.Length);
         foreach (var hit in results)
         {
             if (hit.collider.CompareTag("Player"))

@@ -23,11 +23,11 @@ public class Door : MonoBehaviour, IInteractable
         float t = 0;
         if (open)
         {
-            angle = Quaternion.Euler(90, 0, 0);
+            angle = Quaternion.Euler(0, 90, 0);
         }
         else
         {
-            angle = Quaternion.Euler(-90, 0, 0);
+            angle = Quaternion.Euler(0, -90, 0);
         }
 
         var start = transform.rotation;

@@ -57,7 +57,7 @@ public class UnitActionMove : UnitAction
 
     public override void EndAction(UnitController controller, UnitView view)
     {
-        view.SetStoppingDistance();
+        controller.SetStoppingDistance();
     }
 }
 
@@ -86,28 +86,33 @@ public class UnitActionInteract : UnitAction
     public UnitActionInteract(GameObject target) : base(target)
     {
         _interactable = _target.GetComponent<IInteractable>();
+        if (_interactable == null)
+        {
+            _interactable = _target.GetComponentInParent<IInteractable>();
+        }
         actionName = "Interact";
     }
     
+    // Perform the interact in the interactable object.
     public override void Action(UnitController controller, UnitView view)
     {
-        //take the Interact function from the interactable and perform that.
         if (_interactable.Interact())
         {
             view.NextAction();
         }
     }
 
+    // Check to see if the player is in range to interact first.
     public override void StartAction(UnitController controller, UnitView view)
     {
-        //if not in range of interaction, move to the interaction first.
-        //requeue actions so that we check that interaction again.
+        // If not in range of interaction, move to the interaction first and
+        // requeue actions so that we check that interaction again.
         if (Vector3.Distance(_target.transform.position, view.transform.position) > _interactable.Range)
         {
             //Requeue.
             var queue = view.GetActions();
             view.OverwriteActionsNewQueue(view.GetAction(UnitActions.Move, _target));
-            view.SetStoppingDistance(_interactable.Range);
+            controller.SetStoppingDistance(_interactable.Range);
             view.AppendAction(this);
             foreach (var action in queue)
             {
@@ -123,6 +128,6 @@ public class UnitActionInteract : UnitAction
     public override void EndAction(UnitController controller, UnitView view)
     {
         _interactable.EndInteract();
-        view.SetStoppingDistance();
+        controller.SetStoppingDistance();
     }
 }
