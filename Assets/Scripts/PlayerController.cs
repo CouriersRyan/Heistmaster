@@ -50,6 +50,10 @@ public class PlayerController : MonoBehaviour
             {
                 selectedUnit = hit.collider.gameObject.GetComponent<UnitView>();
             }
+            if (hit.collider.gameObject.CompareTag("Interactable"))
+            {
+                //TODO: Implement
+            }
         }
     }
 

@@ -91,4 +91,9 @@ public class UnitView : MonoBehaviour
 
         return newAction;
     }
+
+    public void SetUnitSpeed(float speed)
+    {
+        model.agent.speed = speed;
+    }
 }
