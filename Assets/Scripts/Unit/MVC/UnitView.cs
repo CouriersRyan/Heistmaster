@@ -27,7 +27,7 @@ public class UnitView : MonoBehaviour
     // While there is an action queued, run the action.
     protected void Update()
     {
-        if(_currentAction != null)_currentAction.Action(_controller, this);
+        if(_currentAction != null &&  !model.knockedOut)_currentAction.Action(_controller, this);
     }
 
     // Stop the previous action on the queue and run the new action in the front of the queue.
@@ -53,6 +53,14 @@ public class UnitView : MonoBehaviour
     public void OverwriteActions(UnitAction action)
     {
         _queueActions.Clear();
+        _queueActions.Enqueue(action);
+        NextAction();
+    }
+    
+    // Creates a new Queue of actions to use as the queue.
+    public void OverwriteActionsNewQueue(UnitAction action)
+    {
+        _queueActions = new Queue<UnitAction>();
         _queueActions.Enqueue(action);
         NextAction();
     }
@@ -83,9 +91,13 @@ public class UnitView : MonoBehaviour
                 newAction = new UnitActionMove(target);
                 break;
             
+            case UnitActions.Interact:
+                newAction = new UnitActionInteract(target);
+                break;
+            
             default:
             case UnitActions.Idle:
-                newAction = new UnitAction(target);
+                newAction = new UnitActionIdle(target);
                 break;
         }
 
@@ -95,5 +107,17 @@ public class UnitView : MonoBehaviour
     public void SetUnitSpeed(float speed)
     {
         model.agent.speed = speed;
+    }
+
+    public void SetKnockout(bool knockedOut)
+    {
+        model.knockedOut = knockedOut;
+        OverwriteActions(GetAction(UnitActions.Idle, null));
+        
+    }
+
+    public void SetStoppingDistance(float stopDist = UnitModel.StopDist)
+    {
+        model.agent.stoppingDistance = stopDist;
     }
 }

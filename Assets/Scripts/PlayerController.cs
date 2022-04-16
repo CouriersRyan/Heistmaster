@@ -9,7 +9,8 @@ using UnityEngine.InputSystem;
 // TODO: This class should never be referenced by another class.
 public class PlayerController : MonoBehaviour
 {
-    
+
+    [SerializeField] private GameObject selected;
     [SerializeField] private UnitView selectedUnit; //The unit the player current has selected.
 
     private Vector2 _mousePos;
@@ -48,11 +49,13 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("Player"))
             {
+                selected = hit.collider.gameObject;
                 selectedUnit = hit.collider.gameObject.GetComponent<UnitView>();
             }
             if (hit.collider.gameObject.CompareTag("Interactable"))
             {
                 //TODO: Implement
+                selected = hit.collider.gameObject;
             }
         }
     }
@@ -78,6 +81,11 @@ public class PlayerController : MonoBehaviour
         {
             if (selectedUnit != null)
             {
+                if (hit.collider.gameObject.CompareTag("Interactable"))
+                {
+                    action(selectedUnit.GetAction(UnitActions.Interact, hit.collider.gameObject));
+                    return;
+                }
                 //TODO: Object pooling
                 var target = new GameObject();
                 target.transform.position = hit.point;

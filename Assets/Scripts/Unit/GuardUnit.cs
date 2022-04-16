@@ -59,6 +59,7 @@ public class GuardUnit : UnitView
         else
         {
             spotLight.color = Color.white;
+            suspicion -= Time.deltaTime;
         }
         
         if (suspicion > suspicionThresholds.y)
