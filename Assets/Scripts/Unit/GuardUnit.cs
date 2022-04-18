@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -12,7 +13,8 @@ public class GuardUnit : UnitView
 
     [SerializeField] private Light spotLight;
     [SerializeField] private float viewDistance;
-    [SerializeField] private float castRadius = 3f;
+    [SerializeField] private Vector2 castRadii;
+    private float _castRadius;
 
     [SerializeField] private float walkSpd = 2f;
     [SerializeField] private float runSpd = 4.5f;
@@ -32,6 +34,8 @@ public class GuardUnit : UnitView
         
         //Takes the transforms in the pathContainer and converts it to a path for the guard to patrol.
         _waypoints = new Transform[pathContainer.childCount];
+
+        _castRadius = castRadii.x;
 
         for (int i = 0; i < _waypoints.Length; i++)
         {
@@ -80,7 +84,7 @@ public class GuardUnit : UnitView
     // Check if the player is within range to be seen.
     private Transform SeePlayer()
     {
-        var results = Physics.SphereCastAll(transform.position, castRadius, transform.forward, viewDistance, _layerBoard);
+        var results = Physics.SphereCastAll(transform.position, _castRadius, transform.forward, viewDistance, _layerBoard);
         foreach (var hit in results)
         {
             if (hit.collider.CompareTag("Player"))
@@ -125,7 +129,26 @@ public class GuardUnit : UnitView
         }
         Gizmos.DrawLine(prevPos, startPos);
         
+        Gizmos.DrawSphere(transform.position, _castRadius);
+        
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, transform.forward * viewDistance);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Hit");
+        if (other.CompareTag("Light"))
+        {
+            _castRadius = castRadii.y;
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Light"))
+        {
+            _castRadius = castRadii.x;
+        }
     }
 }

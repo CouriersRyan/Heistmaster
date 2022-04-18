@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3389012113959635556}
   m_Layer: 6
   m_Name: Unit
-  m_TagString: Enemy
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3389012113959635554}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -137,6 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model:
     agent: {fileID: 0}
+    knockedOut: 0
+    _items: []
   currentActionName: 
 --- !u!1001 &3389012112641652189
 PrefabInstance:
@@ -148,6 +150,14 @@ PrefabInstance:
     - target: {fileID: 1589209476840242, guid: 1b1f559bfdac84ab388545154d81dcf8, type: 3}
       propertyPath: m_Name
       value: W Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589209476840242, guid: 1b1f559bfdac84ab388545154d81dcf8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589209476840242, guid: 1b1f559bfdac84ab388545154d81dcf8, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4492593383673758, guid: 1b1f559bfdac84ab388545154d81dcf8, type: 3}
       propertyPath: m_RootOrder
