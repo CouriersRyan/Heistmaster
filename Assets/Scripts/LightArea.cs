@@ -7,7 +7,9 @@ public class LightArea : Togglable
 {
     public override void Toggle()
     {
-        var area = GetComponent<BoxCollider>();
+        var area = GetComponent<Collider>();
         area.enabled = !area.enabled;
+        var mesh = GetComponent<MeshRenderer>();
+        mesh.enabled = !mesh.enabled;
     }
 }

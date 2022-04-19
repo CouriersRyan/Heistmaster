@@ -135,8 +135,12 @@ public class GuardUnit : UnitView
         Gizmos.DrawRay(transform.position, transform.forward * viewDistance);
     }
 
+    // Increases the amount the Guard can see when it enters a light area.
     private void OnTriggerEnter(Collider other)
     {
+        ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit); // Accounts for when the light area
+                                                                                    // trigger is disabled while guard
+                                                                                    // is still in it.
         Debug.Log("Hit");
         if (other.CompareTag("Light"))
         {
@@ -144,8 +148,10 @@ public class GuardUnit : UnitView
         }
     }
     
+    // Decreases the amount the Guard can see when it exits a light area.
     private void OnTriggerExit(Collider other)
     {
+        ReliableOnTriggerExit.NotifyTriggerExit(other, gameObject);
         if (other.CompareTag("Light"))
         {
             _castRadius = castRadii.x;
