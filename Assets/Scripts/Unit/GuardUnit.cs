@@ -54,6 +54,7 @@ public class GuardUnit : UnitView
         {
             spotLight.color = Color.red;
             suspicion += Time.deltaTime * 2f;
+            Debug.Log(suspicion);
             if (suspicion > suspicionThresholds.x)
             {
                 _isPatrol = false;
@@ -63,7 +64,14 @@ public class GuardUnit : UnitView
         else
         {
             spotLight.color = Color.white;
-            suspicion -= Time.deltaTime;
+            if (suspicion > 0)
+            {
+                suspicion -= Time.deltaTime;
+            }
+            else
+            {
+                suspicion = 0;
+            }
         }
         
         if (suspicion > suspicionThresholds.y)
@@ -78,6 +86,12 @@ public class GuardUnit : UnitView
         if (suspicion > suspicionThresholds.z)
         {
             suspicion = suspicionThresholds.z;
+        }
+
+        if (suspicion < suspicionThresholds.x && !_isPatrol)
+        {
+            _isPatrol = true;
+            QueuePath();
         }
     }
 
