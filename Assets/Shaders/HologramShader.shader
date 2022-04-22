@@ -2,13 +2,19 @@ Shader "Unlit/HologramShader"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex ("Albedo Texture", 2D) = "white" {}
+        _TintColor ("Tint Color", Color) = (1, 1, 1, 1)
+        _Transparency ("Transparency", Range(0.0, 0.5)) = 0.25
+        _Emission ("Emission", Range(0.0, 1.0)) = 0.5
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags {"Queue"="Transparent" "RenderType"="Transparent" }
         LOD 100
-
+        
+        ZWrite Off
+        Blend SrcAlpha OneMinusSrcAlpha
+        
         Pass
         {
             CGPROGRAM
@@ -34,6 +40,9 @@ Shader "Unlit/HologramShader"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float4 _TintColor;
+            float _Transparency;
+            float _Emission;
 
             v2f vert (appdata v)
             {
@@ -47,7 +56,9 @@ Shader "Unlit/HologramShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = tex2D(_MainTex, i.uv) + _TintColor;
+                col = col + (tex2D(_MainTex, i.uv) *   _Emission);
+                col.a = _Transparency;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;

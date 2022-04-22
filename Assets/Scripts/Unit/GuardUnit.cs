@@ -103,7 +103,7 @@ public class GuardUnit : UnitView
         {
             if (hit.collider.CompareTag("Player"))
             {
-                if (!Physics.Linecast(transform.position, hit.transform.position, 1 << 7))
+                if (!Physics.Linecast(transform.position, hit.transform.position, _layerBoard))
                 {
                     return hit.transform;
                 }
