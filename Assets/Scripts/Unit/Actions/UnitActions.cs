@@ -6,7 +6,9 @@ public enum UnitActions
 {
     Idle,
     Move,
-    Interact
+    MoveTarget,
+    Interact,
+    InteractMove
 }
 
 /*
@@ -68,10 +70,16 @@ public class UnitActionMoveTarget : UnitAction
     {
         actionName = "MoveTarget";
     }
-
+    
     public override void Action(UnitController controller, UnitView view)
     {
-        controller.UnitMove(_target.transform.position);
+        // Only updates position to go to as long as target can be seen, otherwise, just go to the last seen position.
+        var seeTarget = view.SeeTarget(_target.transform);
+        if (seeTarget != null)
+        {
+            controller.UnitMove(_target.transform.position);
+        }
+        
         if (controller.CheckReachedDestination())
         {
             view.NextAction();
@@ -93,6 +101,8 @@ public class UnitActionInteract : UnitAction
         actionName = "Interact";
     }
     
+    protected UnitActions unitActions = UnitActions.Move;
+    
     // Perform the interact in the interactable object.
     public override void Action(UnitController controller, UnitView view)
     {
@@ -111,7 +121,7 @@ public class UnitActionInteract : UnitAction
         {
             //Requeue.
             var queue = view.GetActions();
-            view.OverwriteActionsNewQueue(view.GetAction(UnitActions.Move, _target));
+            view.OverwriteActionsNewQueue(view.GetAction(unitActions, _target));
             controller.SetStoppingDistance(_interactable.Range);
             view.AppendAction(this);
             foreach (var action in queue)
@@ -129,5 +139,14 @@ public class UnitActionInteract : UnitAction
     {
         _interactable.EndInteract();
         controller.SetStoppingDistance();
+    }
+}
+
+// Interact action but for a moving target.
+public class UnitActionInteractTarget : UnitActionInteract
+{
+    public UnitActionInteractTarget(GameObject target) : base(target)
+    {
+        unitActions = UnitActions.MoveTarget;
     }
 }

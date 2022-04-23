@@ -138,8 +138,12 @@ MonoBehaviour:
   model:
     agent: {fileID: 0}
     knockedOut: 0
+    timer: 0
+    timerMax: 5
+    range: 1
     _items: []
   currentActionName: 
+  viewDistance: 0
 --- !u!1001 &3389012112641652189
 PrefabInstance:
   m_ObjectHideFlags: 0

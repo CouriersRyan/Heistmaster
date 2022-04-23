@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class UnitView : MonoBehaviour
+public class UnitView : MonoBehaviour, IInteractable
 {
     // MVC
     [SerializeField] private UnitModel model;
@@ -16,6 +16,9 @@ public class UnitView : MonoBehaviour
     private Queue<UnitAction> _queueActions = new Queue<UnitAction>();
     private UnitAction _currentAction;
     [SerializeField] private string currentActionName;
+    
+    [SerializeField] protected float viewDistance;
+    protected float _castRadius = 5f;
     
     // Start is called before the first frame update
     protected void Start()
@@ -35,6 +38,7 @@ public class UnitView : MonoBehaviour
     {
         // TODO: Object pooling
         if(_currentAction != null) _currentAction.EndAction(_controller, this);
+        if(model.knockedOut) return null;
         if (_queueActions.Count > 0)
         {
             _currentAction = _queueActions.Dequeue();
@@ -91,8 +95,16 @@ public class UnitView : MonoBehaviour
                 newAction = new UnitActionMove(target);
                 break;
             
+            case UnitActions.MoveTarget:
+                newAction = new UnitActionMoveTarget(target);
+                break;
+            
             case UnitActions.Interact:
                 newAction = new UnitActionInteract(target);
+                break;
+            
+            case UnitActions.InteractMove:
+                newAction = new UnitActionInteractTarget(target);
                 break;
             
             default:
@@ -105,6 +117,7 @@ public class UnitView : MonoBehaviour
     }
     
     // Knocks out or unknocks out the unit, preventing them from taking actions.
+    // If it is any player unit that gets knocked out, end the game.
     public void SetKnockout(bool knockedOut)
     {
         model.knockedOut = knockedOut;
@@ -114,7 +127,56 @@ public class UnitView : MonoBehaviour
             item.SetActive(true);
             item.transform.position = transform.position;
         }
+        if(gameObject.CompareTag("Player")) GameManager.Instance.GameOver();
     }
+
+    public bool GetKnockout()
+    {
+        return model.knockedOut;
+    }
+
+    // Check if the target is within range to be seen.
+    // For checking for a specific transform.
+    public Transform SeeTarget(Transform target)
+    {
+        Func<Transform, bool> check = t =>
+        {
+            return t == target;
+        };
+        return SeeTarget(check);
+    }
+    
+    // Overloaded method, checks for specific tag.
+    public Transform SeeTarget(string targetTag)
+    {
+        Func<Transform, bool> check = t =>
+        {
+            return t.CompareTag(targetTag);
+        };
+        return SeeTarget(check);
+    }
+    
+    // main bulk of the overloaded SeeTarget method. Takes in an anonymous method and uses that are the comparison.
+    private Transform SeeTarget(Func<Transform, bool> check)
+    {
+        var results = Physics.SphereCastAll(transform.position, _castRadius, transform.forward, viewDistance, _layerBoard);
+        foreach (var hit in results)
+        {
+            if (check(hit.collider.transform))
+            {
+                
+                if (!Physics.Linecast(transform.position, hit.transform.position, (1 << 3) + (1 << 7)))
+                {
+                    Debug.Log("hit");
+                    return hit.transform;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    
     
     // Sets the speed of the navmesh agent.
     public void SetUnitSpeed(float speed)
@@ -127,5 +189,63 @@ public class UnitView : MonoBehaviour
     {
         item.transform.position = Vector3.zero;
         model._items.Add(item);
+    }
+
+    
+    
+    /*
+     *  Implementation for interactable on a unit.
+     *  Interaction is for knocking out and restoring units.
+     */
+    
+    private UnitView _interactor;
+    private bool _canInteract;
+    public float Range
+    {
+        get { return model.range; }
+    }
+    public bool CanInteract
+    {
+        get { return _canInteract; }
+    }
+    public bool Interact()
+    {
+        if (Vector3.Distance(_interactor.transform.position, transform.position) > Range)
+        {
+            return true;
+        }
+        
+        if (model.knockedOut)
+        {
+            model.timer -= Time.deltaTime;
+            if (model.timer < 0)
+            {
+                SetKnockout(false);
+                return true;
+            }
+
+            return false;
+        }
+        else
+        {
+            SetKnockout(true);
+            return true;
+        }
+    }
+
+    public void StartInteract(UnitView interactor)
+    {
+        if (_interactor == null)
+        {
+            _interactor = interactor;
+            _canInteract = false;
+            model.timer = model.timerMax;
+        }
+    }
+
+    public void EndInteract()
+    {
+        _interactor = null;
+        _canInteract = true;
     }
 }

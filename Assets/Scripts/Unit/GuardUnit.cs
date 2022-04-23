@@ -12,10 +12,8 @@ public class GuardUnit : UnitView
     private Transform[] _waypoints;
 
     [SerializeField] private Light spotLight;
-    [SerializeField] private float viewDistance;
     [SerializeField] private Vector2 castRadii;
-    private float _castRadius;
-
+    
     [SerializeField] private float walkSpd = 2f;
     [SerializeField] private float runSpd = 4.5f;
     
@@ -25,6 +23,7 @@ public class GuardUnit : UnitView
     private float _viewAngle;
 
     private bool _isPatrol;
+    private bool _isChasing;
 
     private void Start()
     {
@@ -55,15 +54,18 @@ public class GuardUnit : UnitView
             spotLight.color = Color.red;
             suspicion += Time.deltaTime * 2f;
             Debug.Log(suspicion);
-            if (suspicion > suspicionThresholds.x)
+            if (suspicion > suspicionThresholds.x && !_isChasing)
             {
                 _isPatrol = false;
-                OverwriteActions(GetAction(UnitActions.Move, player.gameObject));
+                _isChasing = true;
+                OverwriteActions(GetAction(UnitActions.MoveTarget, player.gameObject));
+                AppendAction(GetAction(UnitActions.InteractMove, player.gameObject));
             }
         }
         else
         {
             spotLight.color = Color.white;
+            _isChasing = false;
             if (suspicion > 0)
             {
                 suspicion -= Time.deltaTime;
@@ -96,21 +98,9 @@ public class GuardUnit : UnitView
     }
 
     // Check if the player is within range to be seen.
-    private Transform SeePlayer()
+    public Transform SeePlayer()
     {
-        var results = Physics.SphereCastAll(transform.position, _castRadius, transform.forward, viewDistance, _layerBoard);
-        foreach (var hit in results)
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                if (!Physics.Linecast(transform.position, hit.transform.position, _layerBoard))
-                {
-                    return hit.transform;
-                }
-            }
-        }
-
-        return null;
+        return SeeTarget("Player");
     }
 
     public override UnitAction NextAction()
@@ -155,7 +145,7 @@ public class GuardUnit : UnitView
         ReliableOnTriggerExit.NotifyTriggerEnter(other, gameObject, OnTriggerExit); // Accounts for when the light area
                                                                                     // trigger is disabled while guard
                                                                                     // is still in it.
-        Debug.Log("Hit");
+
         if (other.CompareTag("Light"))
         {
             _castRadius = castRadii.y;

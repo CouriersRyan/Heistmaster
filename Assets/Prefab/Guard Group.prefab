@@ -95,15 +95,18 @@ MonoBehaviour:
   model:
     agent: {fileID: 0}
     knockedOut: 0
+    timer: 0
+    timerMax: 5
+    range: 0
     _items: []
   currentActionName: 
+  viewDistance: 4
   pathContainer: {fileID: 4271321652664226527}
   spotLight: {fileID: 4271321653397459448}
-  viewDistance: 4
   castRadii: {x: 1.5, y: 3}
   walkSpd: 2
   runSpd: 4.5
-  suspicionThresholds: {x: 2.5, y: 10, z: 20}
+  suspicionThresholds: {x: 1, y: 8, z: 15}
   suspicion: 0
 --- !u!23 &4271321652074962937
 MeshRenderer:
