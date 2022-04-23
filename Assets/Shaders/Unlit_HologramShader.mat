@@ -25,8 +25,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emission: 0.5
-    - _Transparency: 0.4
+    - _Emission: 0.2
+    - _Transparency: 0.2
     m_Colors:
     - _Emission: {r: 1, g: 1, b: 1, a: 0.5}
     - _TintColor: {r: 0.026486285, g: 0.16774525, b: 0.2264151, a: 1}

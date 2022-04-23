@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.PlayerLoop;
 
 public class Door : MonoBehaviour, IInteractable
 {
@@ -23,11 +24,11 @@ public class Door : MonoBehaviour, IInteractable
         float t = 0;
         if (open)
         {
-            angle = Quaternion.Euler(0, 90, 0);
+            angle = Quaternion.Euler(0, -90, 0);
         }
         else
         {
-            angle = Quaternion.Euler(0, -90, 0);
+            angle = Quaternion.Euler(0, 90, 0);
         }
 
         var start = transform.rotation;
@@ -61,14 +62,8 @@ public class Door : MonoBehaviour, IInteractable
         timer -= Time.deltaTime;
         if (timer < 0)
         {
-            if (isOpen)
-            {
-                StartCoroutine(ToggleDoor(false));
-            }
-            else
-            {
-                StartCoroutine(ToggleDoor(true));
-            }
+            StartCoroutine(ToggleDoor(isOpen));
+            isOpen = !isOpen;
             return true;
         }
 

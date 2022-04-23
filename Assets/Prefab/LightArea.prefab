@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1238460041366253939}
   - component: {fileID: 3059462486975581783}
   - component: {fileID: 9022717561505954349}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: LightArea
   m_TagString: Light
   m_Icon: {fileID: 0}
