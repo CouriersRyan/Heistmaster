@@ -9,3 +9,4 @@ ReliableOnTriggerExit from https://forum.unity.com/threads/fix-ontriggerexit-wil
 [Little Games Asset Pack](https://assetstore.unity.com/packages/3d/props/free-little-games-asset-pack-125089) by Ferocious Industries  
 [RPG/FPS Game Assets for PC/Mobile (Industrial Set v3.0)](https://assetstore.unity.com/packages/3d/environments/industrial/rpg-fps-game-assets-for-pc-mobile-industrial-set-v3-0-101429) by
 Dmitrii Kutsenko  
+[Multipass Shaders (& inverted Hull outlines)](https://ronja-tutorials.tumblr.com/post/176120178562/multipass-shaders-inverted-hull-outlines) by Ronja

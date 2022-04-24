@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform overPos;
     [SerializeField] private Vector3 offSetPos;
     [SerializeField] private float camSpd = 1f;
+
+    [SerializeField] private Material[] outlineMaterials; // The material of the units, incharge of outlining.
+    [SerializeField] private Transform highlightMarker;
     
     private Vector2 _mousePos;
     private float _shift;
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         cam.transform.position = overPos.position;
         cam.transform.rotation = overPos.rotation;
+        selected = selectedUnit.gameObject;
         _isZoomed = false;
         GameManager.Instance.playerUnits = listOfUnits.Count;
     }
@@ -55,6 +59,13 @@ public class PlayerController : MonoBehaviour
             var position = cam.transform.position;
             position = new Vector3(position.x + (camMoveCombined.x * camSpd), position.y, position.z + (camMoveCombined.y * camSpd));
             cam.transform.position = position;
+        }
+
+        if (highlightMarker != null && selected != null)
+        {
+            var position = selected.transform.position;
+            var transform1 = highlightMarker.transform;
+            transform1.position = new Vector3(position.x, transform1.position.y, position.z);
         }
     }
 
@@ -92,7 +103,6 @@ public class PlayerController : MonoBehaviour
             }
             if (hit.collider.gameObject.CompareTag("Interactable"))
             {
-                //TODO: Implement
                 selected = hit.collider.gameObject;
             }
         }
@@ -149,6 +159,10 @@ public class PlayerController : MonoBehaviour
         {
             cam.transform.position = zoomPos.position;
             cam.transform.rotation = zoomPos.rotation;
+            foreach (var outlineMaterial in outlineMaterials)
+            {
+                outlineMaterial.SetFloat("_OutlineThickness", 0.001f);
+            }
         }
         else
         {
@@ -156,6 +170,10 @@ public class PlayerController : MonoBehaviour
             zoomPos.rotation = cam.transform.rotation;
             cam.transform.position = overPos.position;
             cam.transform.rotation = overPos.rotation;
+            foreach (var outlineMaterial in outlineMaterials)
+            {
+                outlineMaterial.SetFloat("_OutlineThickness", 0.003f);
+            }
         }
     }
 
@@ -204,10 +222,12 @@ public class PlayerController : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Interactable"))
                 {
                     action(selectedUnit.GetAction(UnitActions.Interact, hit.collider.gameObject));
+                    selected = hit.collider.gameObject;
                     return;
                 }
                 //TODO: Object pooling
                 var target = new GameObject();
+                selected = target;
                 target.transform.position = hit.point;
                 action(selectedUnit.GetAction(UnitActions.Move, target));
             }

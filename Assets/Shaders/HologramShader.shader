@@ -1,3 +1,4 @@
+// Wave and oscillating grain of disappearing pixels.
 Shader "Unlit/HologramShader"
 {
     Properties
@@ -6,7 +7,12 @@ Shader "Unlit/HologramShader"
         _TintColor ("Tint Color", Color) = (1, 1, 1, 1)
         _Transparency ("Transparency", Range(0.0, 0.5)) = 0.25
         _Emission ("Emission", Range(0.0, 1.0)) = 0.5
-    }
+        _CutoutThresh ("Cutout  Threshold", Range(0.0, 1.0)) = 0.2
+        _Distance ("Distance", Float) = 1
+        _Amplitude ("Amplitude", Float) = 1
+        _Speed ("Speed", Float) = 1
+        _Amount ("Amount", Float) = 1
+        }
     SubShader
     {
         Tags {"Queue"="Transparent" "RenderType"="Transparent" }
@@ -43,24 +49,29 @@ Shader "Unlit/HologramShader"
             float4 _TintColor;
             float _Transparency;
             float _Emission;
+            float _CutoutThresh;
+            float _Distance;
+            float _Amplitude;
+            float _Speed;
+            float _Amount;
 
             v2f vert (appdata v)
             {
                 v2f o;
+                v.vertex.x += sin(_Time.y * _Speed + v.vertex.z * _Amplitude) * _Distance * _Amount;
+                v.vertex.z += sin(_Time.y * _Speed + v.vertex.x * _Amplitude) * _Distance * _Amount;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv) + _TintColor;
                 col = col + (tex2D(_MainTex, i.uv) *   _Emission);
                 col.a = _Transparency;
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
+                
+                if (col.r < clamp(_CutoutThresh + 1.4 + 0.6 * sin(_Time.y * 2), 0.4, 0.95)) discard;
                 return col;
             }
             ENDCG
