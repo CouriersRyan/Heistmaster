@@ -23,15 +23,20 @@ Material:
         m_Texture: {fileID: 2800000, guid: 618c9af491edae94fae4062a979bd857, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _StaticTex:
+        m_Texture: {fileID: 2800000, guid: 40882ca837165de4b851bffef3d0f8f9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amount: 0.64
-    - _Amplitude: 4.71
-    - _CutoutThresh: 0.05
+    - _Amount: 9.3
+    - _Amplitude: 4.12
+    - _CutoutThresh: 0.166
     - _Distance: 0.07
-    - _Emission: 0.209
-    - _Speed: 5.03
-    - _Transparency: 0.261
+    - _Emission: 0.275
+    - _OffsetIncrement: 0.316
+    - _Speed: 4.06
+    - _Transparency: 0.274
     m_Colors:
     - _Emission: {r: 1, g: 1, b: 1, a: 0.5}
     - _TintColor: {r: 0.026486285, g: 0.16774525, b: 0.2264151, a: 1}

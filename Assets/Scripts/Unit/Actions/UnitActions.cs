@@ -122,7 +122,7 @@ public class UnitActionInteract : UnitAction
             //Requeue.
             var queue = view.GetActions();
             view.OverwriteActionsNewQueue(view.GetAction(unitActions, _target));
-            controller.SetStoppingDistance(_interactable.Range);
+            controller.SetStoppingDistance(_interactable.Range - 0.1f);
             view.AppendAction(this);
             foreach (var action in queue)
             {

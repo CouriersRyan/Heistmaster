@@ -9,7 +9,7 @@ public class UnitModel
 {
     public NavMeshAgent agent;
     public bool knockedOut;
-    public const float StopDist = 0.8f;
+    public const float StopDist = 0.3f;
     
     public float timer;
     public float timerMax = 5f;

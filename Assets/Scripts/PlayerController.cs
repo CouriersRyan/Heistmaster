@@ -202,6 +202,8 @@ public class PlayerController : MonoBehaviour
         {
             cam.transform.position = selectedUnit.transform.position + offSetPos;
         }
+
+        selected = selectedUnit.gameObject;
     }
 
     // Shoots out a ray from mouse position and check if it hits something on the board.

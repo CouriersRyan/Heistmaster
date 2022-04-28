@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: White_UnitSurfaceShader
-  m_Shader: {fileID: 4800000, guid: 423ddfc6439a3f842b8307972268ac43, type: 3}
+  m_Name: OutlineShader
+  m_Shader: {fileID: 4800000, guid: 0264dabfc79268b42887cb201dd0d7d7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -25,10 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Glossiness: 0.603
-    - _Metallic: 0.852
-    - _OutlineThickness: 0.001
+    - _OutlineThickness: 0.00147
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1, g: 0.76042247, b: 0.3433962, a: 1}
   m_BuildTextureStacks: []
