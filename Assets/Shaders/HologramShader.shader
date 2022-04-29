@@ -16,7 +16,7 @@ Shader "Unlit/HologramShader"
     }
     SubShader
     {
-        Tags {"Queue"="Transparent" "RenderType"="Transparent" }
+        Tags {"Queue"="Transparent" "RenderType"="Transparent"}
         LOD 100
         
         ZWrite Off

@@ -10,24 +10,26 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] private GameObject selected;
+    [SerializeField] private GameObject selected; //Any object the player last clicked on.
     [SerializeField] private UnitView selectedUnit; //The unit the player current has selected.
     [SerializeField] private List<UnitView> listOfUnits;
 
+    // Fields that relate to the camera.
     [SerializeField] private Camera cam;
-    [SerializeField] private Transform zoomPos;
-    [SerializeField] private Transform overPos;
-    [SerializeField] private Vector3 offSetPos;
-    [SerializeField] private float camSpd = 1f;
+    [SerializeField] private Transform zoomPos; // Camera position when zoomed in.
+    [SerializeField] private Transform overPos; // Camera position when looking at the whole level.
+    [SerializeField] private Transform menuPos; // Camera position when inside a menu.
+    [SerializeField] private Vector3 offSetPos; // Offset used when focusing in on an object on the board.
+    [SerializeField] private float camSpd = 1f; // Speed the camera moves at when zoomed in.
 
     [SerializeField] private Material[] outlineMaterials; // The material of the units, incharge of outlining.
     [SerializeField] private Transform highlightMarker;
     
-    private Vector2 _mousePos;
-    private float _shift;
-    private bool _isZoomed;
-    private Vector2 _camMove = new Vector2();
-    private Vector2 _camMoveMouse = new Vector2();
+    private Vector2 _mousePos; // Position of mouse in screen space.
+    private float _shift; // Holds whether or not the Shift key is being held down.
+    private bool _isZoomed; // Is the camera zoomed in.
+    private Vector2 _camMove = new Vector2(); // What direction the mouse should move at based on key inputs.
+    private Vector2 _camMoveMouse = new Vector2(); // The direction the mouse should move at using edge pan.
     
     private int _layerBoard = (1 << 3) + (1 << 6) + (1 << 7); // A layer mask that only interacts with gameobjects that are part of the board.
     // i.e. not decorations, UI, menus, etc.
@@ -35,11 +37,18 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        cam.transform.position = overPos.position;
-        cam.transform.rotation = overPos.rotation;
+        StartCoroutine(ToMenuCamera(false));
         selected = selectedUnit.gameObject;
         _isZoomed = false;
         GameManager.Instance.playerUnits = listOfUnits.Count;
+        GameManager.Instance.GameEndEvent += () =>
+        {
+            StartCoroutine(ToMenuCamera(true));
+        };
+        GameManager.Instance.GameOverEvent += () =>
+        {
+            StartCoroutine(ToMenuCamera(true));
+        };
     }
 
     // Handles moving the camera.
@@ -233,6 +242,34 @@ public class PlayerController : MonoBehaviour
                 target.transform.position = hit.point;
                 action(selectedUnit.GetAction(UnitActions.Move, target));
             }
+        }
+    }
+
+    // Rotates and moves the camera between its menu position and position for gameplay.
+    private IEnumerator ToMenuCamera(bool toMenu)
+    {
+        Transform target;
+        if (toMenu)
+        {
+            target = menuPos;
+        }
+        else
+        {
+            target = overPos;
+        }
+
+        var transform1 = cam.transform;
+        Vector3 startPos = transform1.position;
+        Quaternion startRot = transform1.rotation;
+
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            cam.transform.position = Vector3.Slerp(startPos, target.position, t);
+            cam.transform.rotation = Quaternion.Slerp(startRot, target.rotation, t);
+            t += Time.deltaTime / 2;
+            yield return null;
         }
     }
 }
