@@ -12,6 +12,14 @@ public class UnitAction
     
     protected GameObject _target; //Target for the action.
 
+    public GameObject Target
+    {
+        get
+        {
+            return _target;
+        }
+    }
+
     public UnitAction(GameObject target)
     {
         _target = target;

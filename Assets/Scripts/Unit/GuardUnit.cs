@@ -58,8 +58,7 @@ public class GuardUnit : UnitView
             {
                 _isPatrol = false;
                 _isChasing = true;
-                OverwriteActions(GetAction(UnitActions.MoveTarget, player.gameObject));
-                AppendAction(GetAction(UnitActions.InteractMove, player.gameObject));
+                OverwriteActions(GetAction(UnitActions.InteractMove, player.gameObject));
             }
         }
         else

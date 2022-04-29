@@ -44,10 +44,12 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.GameEndEvent += () =>
         {
             StartCoroutine(ToMenuCamera(true));
+            selectedUnit = null;
         };
         GameManager.Instance.GameOverEvent += () =>
         {
             StartCoroutine(ToMenuCamera(true));
+            selectedUnit = null;
         };
     }
 
@@ -81,15 +83,18 @@ public class PlayerController : MonoBehaviour
     // Runs when the player right-clicks.
     private void OnMouseRight(InputValue input)
     {
-        if (_shift > 0)
+        if (selectedUnit != null)
         {
-            // Performs actions when the player right-clicks with the mouse on a position on the board. End previous action.
-            OnMakeAction(selectedUnit.AppendAction);
-        }
-        else
-        {
-            // Queues up actions when the player shift+right-clicks with the mouse on a position on the board.
-            OnMakeAction(selectedUnit.OverwriteActions);
+            if (_shift > 0)
+            {
+                // Performs actions when the player right-clicks with the mouse on a position on the board. End previous action.
+                OnMakeAction(selectedUnit.AppendAction);
+            }
+            else
+            {
+                // Queues up actions when the player shift+right-clicks with the mouse on a position on the board.
+                OnMakeAction(selectedUnit.OverwriteActions);
+            }
         }
     }
 
@@ -175,10 +180,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            zoomPos.position = cam.transform.position;
-            zoomPos.rotation = cam.transform.rotation;
-            cam.transform.position = overPos.position;
-            cam.transform.rotation = overPos.rotation;
+            var transform1 = cam.transform;
+            zoomPos.position = new Vector3(transform1.position.x, zoomPos.position.y, transform1.position.z);
+            transform1.position = overPos.position;
+            transform1.rotation = overPos.rotation;
             foreach (var outlineMaterial in outlineMaterials)
             {
                 outlineMaterial.SetFloat("_OutlineThickness", 0.003f);
@@ -238,6 +243,7 @@ public class PlayerController : MonoBehaviour
                 }
                 //TODO: Object pooling
                 var target = new GameObject();
+                target.AddComponent<StrayActionMarker>();
                 selected = target;
                 target.transform.position = hit.point;
                 action(selectedUnit.GetAction(UnitActions.Move, target));

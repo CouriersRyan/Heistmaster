@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Singleton Game Manager that handles the overall game state.
 public class GameManager : MonoBehaviour
@@ -27,19 +28,11 @@ public class GameManager : MonoBehaviour
     // Game End is used in cases where the player escape. The outcome is not necessarily a win, but can result in one.
     public delegate void GameEndDelegate();
 
-
-    // Game Start is called when the play button in the main menu is pressed.
-    public delegate void GameStartDelegate();
-
     public event GameOverDelegate GameOverEvent;
     public event GameEndDelegate GameEndEvent;
-    public event GameStartDelegate GameStartEvent;
 
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject gameEndScreen;
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private PlayerController player;
-    [SerializeField] private GameObject board;
 
     public int playerUnits;
 
@@ -54,16 +47,6 @@ public class GameManager : MonoBehaviour
         {
             gameEndScreen.SetActive(true);
         };
-
-        GameStartEvent = () =>
-        {
-            mainMenu.SetActive(false);
-            board.gameObject.SetActive(true);
-            player.gameObject.SetActive(true);
-        };
-        
-        player.gameObject.SetActive(false);
-        board.gameObject.SetActive(false);
     }
 
     // Invokes the Game Over event.
@@ -78,9 +61,32 @@ public class GameManager : MonoBehaviour
         if (GameEndEvent != null) GameEndEvent.Invoke();
     }
 
-    // Invokes the Game Start event.
-    public void GameStart()
+
+    // Restarts the game.
+    public void Restart()
     {
-        if (GameStartEvent != null) GameStartEvent.Invoke();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    
+    // Return to main menu.
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    // Go to the next level or go back the main menu.
+    public void Next()
+    {
+        var index = SceneManager.GetActiveScene().buildIndex;
+        if (index + 1 < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(index + 1);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
+        
     }
 }
