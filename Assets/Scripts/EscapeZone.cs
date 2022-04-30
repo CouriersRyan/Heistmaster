@@ -18,7 +18,12 @@ public class EscapeZone : MonoBehaviour
             return _numInZone;
         }
     }
-    
+
+    private void Awake()
+    {
+        _numInZone = 0;
+    }
+
     // Whenever a player unit enter an escape zone, increment the count by one and check if all player units have entered.
     // If they have, then end the game.
     void OnTriggerEnter(Collider other)

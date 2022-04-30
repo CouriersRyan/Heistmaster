@@ -15,5 +15,5 @@ public class UnitModel
     public float timerMax = 5f;
     public float range;
 
-    public List<GameObject> _items = new List<GameObject>();
+    public List<GameObject> items = new List<GameObject>();
 }

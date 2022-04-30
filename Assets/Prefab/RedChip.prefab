@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   timerMax: 2
+  price: 50
   range: 2
 --- !u!208 &1129078069598086511
 NavMeshObstacle:

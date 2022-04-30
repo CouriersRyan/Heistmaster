@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(ToMenuCamera(true));
             selectedUnit = null;
+            GameManager.Instance.ChangeScoreScreen(GetTotalPrices());
         };
         GameManager.Instance.GameOverEvent += () =>
         {
@@ -277,5 +278,25 @@ public class PlayerController : MonoBehaviour
             t += Time.deltaTime / 2;
             yield return null;
         }
+    }
+
+    // Gets the prices in all player units.
+    public int GetTotalPrices()
+    {
+        int price = 0;
+        foreach (var unit in listOfUnits)
+        {
+            var inventory = unit.Items;
+            foreach (var item in inventory)
+            {
+                Collectible collectible;
+                if (item.TryGetComponent(out collectible))
+                {
+                    price += collectible.Price;
+                }
+            }
+        }
+
+        return price;
     }
 }

@@ -19,6 +19,14 @@ public class UnitView : MonoBehaviour, IInteractable
     
     [SerializeField] protected float viewDistance;
     protected float _castRadius = 5f;
+
+    public List<GameObject> Items
+    {
+        get
+        {
+            return model.items;
+        }
+    }
     
     // Start is called before the first frame update
     protected void Start()
@@ -122,7 +130,7 @@ public class UnitView : MonoBehaviour, IInteractable
     {
         model.knockedOut = knockedOut;
         OverwriteActions(GetAction(UnitActions.Idle, null));
-        foreach (var item in model._items)
+        foreach (var item in model.items)
         {
             item.SetActive(true);
             item.transform.position = transform.position;
@@ -188,7 +196,7 @@ public class UnitView : MonoBehaviour, IInteractable
     public void AddItem(GameObject item)
     {
         item.transform.position = Vector3.zero;
-        model._items.Add(item);
+        model.items.Add(item);
     }
 
     

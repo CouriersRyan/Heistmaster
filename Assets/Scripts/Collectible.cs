@@ -2,13 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Class for collectible objects with a value and interaction.
 public class Collectible : MonoBehaviour, IInteractable
 {
 
     [SerializeField] private float timer;
     [SerializeField] private float timerMax = 2f;
+
+    // Price value of the item.
+    [SerializeField] private int price;
+    public int Price
+    {
+        get
+        {
+            return price;
+        }
+    }
+    
+    // The Unit that is doing the interacting.
     private UnitView _interactor;
 
+    
+    // Maximum distance the interactor can be to interact with this.
     [SerializeField] private float range = 1f; 
     public float Range
     {

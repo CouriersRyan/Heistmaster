@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject gameEndScreen;
+
+    [SerializeField] private TMP_Text endScore;
 
     public int playerUnits;
 
@@ -75,6 +78,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    // Sets the text on the end game screen.
+    public void ChangeScoreScreen(int value)
+    {
+        endScore.text = "$" + value + " stolen!";
+    }
+    
     // Go to the next level or go back the main menu.
     public void Next()
     {
