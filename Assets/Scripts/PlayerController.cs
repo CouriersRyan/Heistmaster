@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
         if (_mousePos.x <= 0)
         {
             newCamMove.x = -1;
-        } else if (_mousePos.x >= Screen.width)
+        } else if (_mousePos.x >= Screen.width - 1)
         {
             newCamMove.x = 1;
         }
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
         if (_mousePos.y <= 0)
         {
             newCamMove.y = -1;
-        } else if (_mousePos.y >= Screen.height)
+        } else if (_mousePos.y >= Screen.height - 1)
         {
             newCamMove.y = 1;
         }
