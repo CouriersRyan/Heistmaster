@@ -2,7 +2,6 @@ Shader "Unlit/OutlineShader"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
         _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
         _OutlineThickness("Outline Thickness", Range(0, 0.003)) = 0.001
     }
@@ -42,7 +41,7 @@ Shader "Unlit/OutlineShader"
             v2f vert(appdata v)
             {
                 v2f o;
-                // gets vertext positions and converts them to clip space for rendering.
+                // gets vertex positions and converts them to clip space for rendering.
                 o.position = UnityObjectToClipPos(v.vertex + normalize(v.normal) * _OutlineThickness);
                 return o;
             }

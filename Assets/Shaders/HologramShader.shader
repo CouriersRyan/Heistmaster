@@ -9,10 +9,7 @@ Shader "Unlit/HologramShader"
         _Transparency ("Transparency", Range(0.0, 0.5)) = 0.25
         _Emission ("Emission", Range(0.0, 1.0)) = 0.5
         _CutoutThresh ("Cutout  Threshold", Range(0.0, 1.0)) = 0.2
-        _Distance ("Distance", Float) = 1
         _Amplitude ("Amplitude", Float) = 1
-        _Speed ("Speed", Float) = 1
-        _Amount ("Amount", Float) = 1
     }
     SubShader
     {
@@ -54,6 +51,7 @@ Shader "Unlit/HologramShader"
             float _Transparency;
             float _Emission;
             float _CutoutThresh;
+            float _Amplitude;
             
             
             v2f vert (appdata v)
@@ -61,10 +59,10 @@ Shader "Unlit/HologramShader"
                 v2f o;
                 if(sin(_Time.y * 5) > 0.3)
                 {
-                    v.vertex.x = v.vertex.x + 1;
+                    v.vertex.x = v.vertex.x + _Amplitude;
                 } else if (sin(_Time.y * 5) > 0.01)
                 {
-                    v.vertex.x = v.vertex.x - 1;
+                    v.vertex.x = v.vertex.x - _Amplitude;
                 } else
                 {
                     v.vertex.x = v.vertex.x;

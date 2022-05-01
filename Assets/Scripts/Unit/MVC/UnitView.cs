@@ -11,14 +11,20 @@ public class UnitView : MonoBehaviour, IInteractable
     [SerializeField] private UnitModel model;
     private UnitController _controller;
     
+    // Layermask for objects on the board.
     protected int _layerBoard = (1 << 3) + (1 << 6) + (1 << 7);
     
+    // List of actions the unit has queued up to perform and the current action it is on.
     private Queue<UnitAction> _queueActions = new Queue<UnitAction>();
     private UnitAction _currentAction;
     [SerializeField] private string currentActionName;
     
+    // How far and wide the unit can "see," used for AI.
     [SerializeField] protected float viewDistance;
     protected float _castRadius = 5f;
+    
+    // Indicates when the unit is interacting with something.
+    [SerializeField] private GameObject interactionMarker;
 
     public List<GameObject> Items
     {
@@ -33,6 +39,7 @@ public class UnitView : MonoBehaviour, IInteractable
     {
         model.agent = GetComponent<NavMeshAgent>();
         _controller = new UnitController(model);
+        SetInteractionMarker(false);
     }
     
     // While there is an action queued, run the action.
@@ -184,7 +191,11 @@ public class UnitView : MonoBehaviour, IInteractable
         return null;
     }
 
-    
+    // Enables and disables the interaction marker.
+    public void SetInteractionMarker(bool active)
+    {
+        if(interactionMarker != null) interactionMarker.SetActive(active);
+    }
     
     // Sets the speed of the navmesh agent.
     public void SetUnitSpeed(float speed)

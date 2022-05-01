@@ -3047,6 +3047,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1636384495781818686, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a80ac2e2b600649aca7733e103c9c05d, type: 2}
+    - target: {fileID: 2259129007818074876, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259129007818074876, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 04bfa8680ed672f44942b509cf6439b7, type: 2}
+    - target: {fileID: 2259129007818074876, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4d31b37791f86e64bbf3fe14ae3c53ad, type: 2}
+    - target: {fileID: 2356099911790193689, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_fontSize
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2356099911790193689, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 3460524206601371018, guid: 9794eb34312dac9489e64f659111666b, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -3095,5 +3119,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gameboard
       objectReference: {fileID: 0}
+    - target: {fileID: 4160670235485994721, guid: 9794eb34312dac9489e64f659111666b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4d31b37791f86e64bbf3fe14ae3c53ad, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9794eb34312dac9489e64f659111666b, type: 3}

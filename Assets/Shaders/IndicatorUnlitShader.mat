@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_BlueprintMarkShader
-  m_Shader: {fileID: 4800000, guid: d1dd8d5609b314d468b1fdeb2fcc1f55, type: 3}
+  m_Name: IndicatorUnlitShader
+  m_Shader: {fileID: 4800000, guid: 55be6e807a4da3e42a42a86860461602, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,14 +20,14 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 85a419cc522f61e4f83e50a9cdff683b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emission: 0.579
-    - _Glossiness: 0
-    - _Metallic: 1
+    - _MinWidth: 0.1
+    - _RangeWidth: 0.2
+    - _Transparency: 0.5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

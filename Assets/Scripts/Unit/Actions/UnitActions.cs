@@ -131,12 +131,14 @@ public class UnitActionInteract : UnitAction
         }
         else
         {
+            view.SetInteractionMarker(true);
             _interactable.StartInteract(view);
         }
     }
 
     public override void EndAction(UnitController controller, UnitView view)
     {
+        view.SetInteractionMarker(false);
         _interactable.EndInteract();
         controller.SetStoppingDistance();
     }

@@ -30,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Amount: 9.3
-    - _Amplitude: 4.12
+    - _Amplitude: 0.7
     - _CutoutThresh: 0.166
     - _Distance: 0.07
     - _Emission: 0.275

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Material[] outlineMaterials; // The material of the units, incharge of outlining.
     [SerializeField] private Transform highlightMarker;
-    
+
     private Vector2 _mousePos; // Position of mouse in screen space.
     private float _shift; // Holds whether or not the Shift key is being held down.
     private bool _isZoomed; // Is the camera zoomed in.
