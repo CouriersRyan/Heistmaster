@@ -19,8 +19,19 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    public void LoadFirstLevel()
+    [SerializeField] private GameObject levelSelect;
+    [SerializeField] private GameObject mainMenu;
+
+    // Loads the level of specified index.
+    public void LoadLevel(int i)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(i);
+    }
+
+    // Toggles between the main menu and level select screens.
+    public void LevelSelect()
+    {
+        levelSelect.SetActive(!levelSelect.activeInHierarchy);
+        mainMenu.SetActive(!mainMenu.activeInHierarchy);
     }
 }

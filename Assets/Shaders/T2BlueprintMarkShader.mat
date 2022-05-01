@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ConnectionHologramShader 1
-  m_Shader: {fileID: 4800000, guid: e9e63146baa07bd459dc8fad2fa6ec03, type: 3}
+  m_Name: T2BlueprintMarkShader
+  m_Shader: {fileID: 4800000, guid: d1dd8d5609b314d468b1fdeb2fcc1f55, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,22 +20,14 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 38f5ae0597e924748b9a1c61b9b3d379, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _StaticTex:
-        m_Texture: {fileID: 2800000, guid: 40882ca837165de4b851bffef3d0f8f9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 34097f8d17371ec46b7e96ce07feef5e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amount: 17.9
-    - _Amplitude: 9.2
-    - _CutoutThresh: 0.182
-    - _Distance: 19.08
-    - _Emission: 0.672
-    - _Speed: 4
-    - _Transparency: 0.162
+    - _Emission: 1
+    - _Glossiness: 0.5
+    - _Metallic: 0
     m_Colors:
-    - _TintColor: {r: 0, g: 1, b: 0.83996654, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
