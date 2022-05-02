@@ -47,6 +47,8 @@ Shader "Unlit/IndicatorUnlitShader"
         // Draws the oscillating outline.
         Pass
         {
+            // Remove all pixels facing towards the camera, this was only the back pixels remain creating an illusion 
+            // of an outline.
             Cull front
             
             CGPROGRAM
@@ -73,6 +75,7 @@ Shader "Unlit/IndicatorUnlitShader"
 
             v2f vert (appdata v)
             {
+                // Increases the size of the shader by a certain minimum with oscillating to a certain maximum.
                 v2f o;
                 float width = _MinWidth + _RangeWidth * ((sin(_Time.y) + 1) / 2);
                 o.vertex = UnityObjectToClipPos(v.vertex + normalize(v.normal) * width);

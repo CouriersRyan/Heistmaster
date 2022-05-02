@@ -1,3 +1,4 @@
+// Creates an outline on applied meshes.
 Shader "Unlit/OutlineShader"
 {
     Properties
@@ -11,7 +12,8 @@ Shader "Unlit/OutlineShader"
         LOD 100
 
         Pass {
-            
+            // Remove all pixels facing towards the camera, this was only the back pixels remain creating an illusion 
+            // of an outline.
             Cull front
             
             CGPROGRAM

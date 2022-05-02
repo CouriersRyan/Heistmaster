@@ -1,3 +1,4 @@
+// Shader for general objects on the blueprint gameboard. Main use is for Emission and Color.
 Shader "Custom/BlueprintMarkShader"
 {
     Properties
@@ -14,10 +15,8 @@ Shader "Custom/BlueprintMarkShader"
         LOD 200
 
         CGPROGRAM
-        // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard fullforwardshadows
-
-        // Use shader model 3.0 target, to get nicer looking lighting
+        
         #pragma target 3.0
 
         sampler2D _MainTex;
@@ -44,12 +43,8 @@ Shader "Custom/BlueprintMarkShader"
         half _Metallic;
         half _Emission;
         fixed4 _Color;
-
-        // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-        // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-        // #pragma instancing_options assumeuniformscaling
+        
         UNITY_INSTANCING_BUFFER_START(Props)
-            // put more per-instance properties here
         UNITY_INSTANCING_BUFFER_END(Props)
 
         void surf (Input IN, inout SurfaceOutputStandard o)
@@ -60,7 +55,11 @@ Shader "Custom/BlueprintMarkShader"
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
+
+            // Emission is in the same color as the color.
             o.Emission = _Emission * c.rgb;
+
+            // Remove all pixels below a certain transparency.
             if(c.a < 0.5) discard;
             o.Alpha = c.a;
         }

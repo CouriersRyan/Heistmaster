@@ -14,7 +14,8 @@ Shader "Custom/UnitSurfaceShader"
     {
         Tags { "RenderType"="Opaque" }
         LOD 200
-
+        
+        // First pass of the shader draws the standard texture of the mesh.
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard fullforwardshadows
@@ -52,8 +53,10 @@ Shader "Custom/UnitSurfaceShader"
         }
         ENDCG
         
+        
+        // Draws the outline.
         Pass {
-            
+            // Removes all front pixels, so that only back pixels remain, creating an illusion of an outline.
             Cull front
             
             CGPROGRAM

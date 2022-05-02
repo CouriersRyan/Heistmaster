@@ -48,6 +48,7 @@ Shader "Unlit/SelectMarkerUnlitShader"
 
             v2f vert (appdata v)
             {
+                // Oscillate the texture in size parallel to itself.
                 v2f o;
                 float3 offset = normalize(v.vertex) * (_OscillationStrength * sin(_Time.y) + 1.4);
                 offset.y = 0;
@@ -60,6 +61,8 @@ Shader "Unlit/SelectMarkerUnlitShader"
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv) * _TintColor;
+
+                // Remove all pixels below a certain transparency.
                 if(col.a < 0.5) discard;
                 return col;
             }
