@@ -5,19 +5,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.PlayerLoop;
 
+// Door component, opens and closes using IInteractable.
 public class Door : MonoBehaviour, IInteractable
 {
     [SerializeField] private float timer;
-    [SerializeField] private float timerMax = 2f;
+    [SerializeField] private float timerMax = 2f; // The amount of time is takes to open the door.
     private UnitView _interactor;
-
-    private NavMeshObstacle _obstacle;
+    
     [SerializeField] private bool isOpen;
-    void Start()
-    {
-        _obstacle = GetComponent<NavMeshObstacle>();
-    }
 
+
+    // Opens or closes the door based on the given boolean.
     IEnumerator ToggleDoor(bool open)
     {
         Quaternion angle;
@@ -42,6 +40,12 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    
+    
+    /*
+     * Implementation of the IInteractable component. Allows Units to open and close the door after a certain
+     * amount of time has passed while interacting with it.
+     */
     [SerializeField] private float range; 
     public float Range
     {

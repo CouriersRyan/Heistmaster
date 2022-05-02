@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Toggles on and off Togglable objects.
+// Toggles on and off Togglable objects. Implements the IInteractable.
 public class Switch : MonoBehaviour, IInteractable
 {
     [SerializeField] private float timer;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Interface for interaction on objects. Enables interaction by Units.
 public interface IInteractable
 {
     public float Range

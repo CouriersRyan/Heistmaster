@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 
+// Area on the board that the player must reach to end the level.
 public class EscapeZone : MonoBehaviour
 {
     

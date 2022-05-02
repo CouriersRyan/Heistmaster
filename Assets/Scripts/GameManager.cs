@@ -31,10 +31,10 @@ public class GameManager : MonoBehaviour
 
     public event GameOverDelegate GameOverEvent;
     public event GameEndDelegate GameEndEvent;
-
+    
+    // References to UI elements in the Canvas.
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject gameEndScreen;
-
     [SerializeField] private TMP_Text endScore;
 
     public int playerUnits;

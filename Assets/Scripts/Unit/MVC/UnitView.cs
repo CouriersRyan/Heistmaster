@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
+// The Unit MVC handles movement for all Units on the gameboard NavMesh. Players take orders from an input, while
+// the AI guards have an AI.
+// The View portion of the Unit MVC.
 public class UnitView : MonoBehaviour, IInteractable
 {
     // MVC
@@ -145,6 +148,8 @@ public class UnitView : MonoBehaviour, IInteractable
         if(gameObject.CompareTag("Player")) GameManager.Instance.GameOver();
     }
 
+    
+    // Returns whether or not the unit is knocked out.
     public bool GetKnockout()
     {
         return model.knockedOut;

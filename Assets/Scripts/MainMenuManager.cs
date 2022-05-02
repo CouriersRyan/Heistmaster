@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Class that goes into the main menu of the game and contains methods used by buttons.
 public class MainMenuManager : MonoBehaviour
 {
     //Singleton implementation.
